@@ -23,6 +23,7 @@ interface LeadDrawerProps {
     onClose: () => void;
     lead: Lead | null;
     primaryColor: string;
+    onNavigate?: (view: string) => void;
 }
 
 const TEMPERATURA_COLORS: Record<string, string> = {
@@ -56,7 +57,7 @@ const ETAPA_LABEL: Record<string, string> = {
     confirmado: '✅ Confirmado',
 };
 
-export const LeadDrawer: React.FC<LeadDrawerProps> = ({ isOpen, onClose, lead, primaryColor }) => {
+export const LeadDrawer: React.FC<LeadDrawerProps> = ({ isOpen, onClose, lead, primaryColor, onNavigate }) => {
     if (!lead) return null;
 
     const vendedor = MOCK_VENDEDORES.find(v => v.id === lead.vendedor_id);
@@ -238,10 +239,10 @@ export const LeadDrawer: React.FC<LeadDrawerProps> = ({ isOpen, onClose, lead, p
                     <button
                         className="w-full py-3 rounded-xl font-semibold text-white flex items-center justify-center gap-2 hover:opacity-90 transition shadow-lg"
                         style={{ backgroundColor: '#25D366' }}
-                        onClick={() => window.open(`https://wa.me/55${lead.telefone}`, '_blank')}
+                        onClick={() => onNavigate?.('chat')}
                     >
                         <MessageSquare className="w-5 h-5" />
-                        Abrir no WhatsApp
+                        Abrir chat
                     </button>
                     <div className="grid grid-cols-2 gap-3">
                         <button className="py-3 rounded-xl bg-gray-700 hover:bg-gray-600 text-white font-medium text-sm transition">

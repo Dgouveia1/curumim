@@ -26,7 +26,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, ten
     { id: 'dashboard', label: 'Home', icon: LayoutDashboard },
     { id: 'calendar', label: 'Agenda', icon: CalendarDays },
     { id: 'kanban', label: 'Gestão de Leads', icon: Users },
-    { id: 'chat', label: 'Chat WhatsApp', icon: MessageSquare },
+    { id: 'chat', label: 'WhatsApp', icon: MessageSquare },
     { id: 'broadcast', label: 'Disparos em Massa', icon: Megaphone },
     { id: 'reports', label: 'Relatórios', icon: BarChart3 },
   ];

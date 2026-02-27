@@ -392,7 +392,7 @@ export const ChatView: React.FC<ChatViewProps> = ({ primaryColor }) => {
                     <div className="flex items-center justify-between mb-4">
                         <h2 className="text-base font-bold text-white flex items-center gap-2">
                             <PartyPopper className="w-5 h-5" style={{ color: primaryColor }} />
-                            Chat WhatsApp
+                            WhatsApp
                         </h2>
                         <div className="flex gap-1">
                             <button className="text-gray-400 hover:text-white transition p-1.5 rounded-lg hover:bg-gray-800">
