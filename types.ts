@@ -136,3 +136,45 @@ export interface BroadcastItem {
   tipo_servico: TipoServico;
   selected: boolean;
 }
+
+// ── Sexo da Criança ────────────────────────────────────────────
+export type SexoCrianca = 'menina' | 'menino' | 'nao_informado';
+
+// ── Responsável pelo cliente ───────────────────────────────────
+export interface Responsavel {
+  nome: string;
+  telefone: string;
+  email?: string;
+  cpf?: string;
+  parentesco?: 'mae' | 'pai' | 'avo' | 'tio' | 'outro';
+}
+
+// ── Entidade: Festa realizada ──────────────────────────────────
+export interface FestaRealizada {
+  data: string;                 // ISO date
+  tipo_servico: TipoServico;
+  tema?: string;
+  qtd_criancas?: number;
+  valor_pago?: number;
+}
+
+// ── Entidade: Cliente (Criança como cadastro principal) ────────
+export interface ClienteCrianca {
+  id: string;
+  created_at: string;
+  // Dados da Criança
+  nome_crianca: string;
+  data_nascimento: string;       // ISO date YYYY-MM-DD
+  sexo: SexoCrianca;
+  gostos: string[];              // Tags de interesses/gostos
+  // Dados do Responsável
+  responsavel: Responsavel;
+  // Histórico
+  ultima_festa?: FestaRealizada; // Data/info da última festa realizada
+  historico_festas?: FestaRealizada[];
+  // Relacionamento com Leads
+  lead_ids?: string[];           // IDs dos leads associados
+  // Meta
+  observacoes?: string;
+  ativo: boolean;
+}

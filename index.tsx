@@ -10,6 +10,7 @@ import { WhatsAppConnect } from './components/WhatsAppConnect';
 import { ChatView } from './components/ChatView';
 import { MassBroadcastView } from './components/MassBroadcastView';
 import { ReportsView } from './components/ReportsView';
+import { ClientesView } from './components/ClientesView';
 import { TENANTS, ACTIVE_TENANT, MOCK_LEADS } from './constants';
 import { Lead } from './types';
 
@@ -35,6 +36,8 @@ const App = () => {
             onLeadClick={setSelectedLead}
           />
         );
+      case 'clientes':
+        return <ClientesView primaryColor={tenant.primaryColor} />;
       case 'ai-calibration':
         return <AICalibration tenant={tenant} />;
       case 'whatsapp':

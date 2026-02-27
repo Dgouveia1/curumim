@@ -11,6 +11,7 @@ import {
   Sparkles,
   Smartphone,
   CalendarDays,
+  Baby,
 } from 'lucide-react';
 import { Tenant } from '../types';
 
@@ -25,6 +26,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, ten
   const operacionalItems = [
     { id: 'dashboard', label: 'Home', icon: LayoutDashboard },
     { id: 'calendar', label: 'Agenda', icon: CalendarDays },
+    { id: 'clientes', label: 'Clientes', icon: Baby },
     { id: 'kanban', label: 'Gestão de Leads', icon: Users },
     { id: 'chat', label: 'WhatsApp', icon: MessageSquare },
     { id: 'broadcast', label: 'Disparos em Massa', icon: Megaphone },
