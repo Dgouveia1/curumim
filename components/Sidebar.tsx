@@ -1,4 +1,5 @@
 import React from 'react';
+import logoImg from '../public/logos/logo.png';
 import {
   LayoutDashboard,
   Users,
@@ -75,7 +76,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, ten
       <div className="h-[72px] flex items-center px-5 border-b border-gray-800/70 gap-3 flex-shrink-0">
         {/* Logo Grupo Curumim */}
         <img
-          src="/logos/logo.png"
+          src={logoImg}
           alt="Grupo Curumim"
           className="h-9 w-auto object-contain"
           style={{ filter: 'brightness(1.05) drop-shadow(0 2px 6px rgba(253,184,19,0.3))' }}
