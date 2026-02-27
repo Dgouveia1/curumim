@@ -229,7 +229,7 @@ export const MassBroadcastView: React.FC<MassBroadcastViewProps> = ({ primaryCol
     const hasActiveFilter = search || filterEtapa || filterServico || filterFup;
 
     return (
-        <div className="h-full flex overflow-hidden">
+        <div className="h-full flex overflow-hidden pb-20 md:pb-0">
 
             {/* ══════════════════════════════════════════
           COLUNA PRINCIPAL — Seleção de Leads

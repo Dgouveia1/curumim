@@ -683,7 +683,7 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ primaryColor }) => {
     ];
 
     return (
-        <div className="h-full overflow-y-auto p-6 space-y-6">
+        <div className="h-full overflow-y-auto p-6 space-y-6 pb-20 md:pb-6">
 
             {/* ── Header ───────────────────────────────────────── */}
             <div className="flex items-center justify-between flex-wrap gap-3">
@@ -712,8 +712,8 @@ export const ReportsView: React.FC<ReportsViewProps> = ({ primaryColor }) => {
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         className={`flex flex-col items-start px-5 py-3 rounded-t-xl border-b-2 transition-all text-left ${activeTab === tab.id
-                                ? 'border-current text-white bg-gray-800/40'
-                                : 'border-transparent text-gray-500 hover:text-gray-300 hover:bg-gray-800/20'
+                            ? 'border-current text-white bg-gray-800/40'
+                            : 'border-transparent text-gray-500 hover:text-gray-300 hover:bg-gray-800/20'
                             }`}
                         style={activeTab === tab.id ? { borderColor: primaryColor, color: primaryColor } : {}}
                     >

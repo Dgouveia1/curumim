@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Menu, LayoutDashboard, MessageSquare, Baby, CalendarDays } from 'lucide-react';
 import { Sidebar } from './components/Sidebar';
 import { HomeView } from './components/HomeView';
 import { CalendarView } from './components/CalendarView';
@@ -19,6 +20,7 @@ const App = () => {
   const [currentView, setCurrentView] = useState('dashboard');
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   const [tenantId] = useState('curumim'); // Tenant ativo: Grupo Curumim
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const tenant = TENANTS[tenantId] || ACTIVE_TENANT;
 
@@ -59,14 +61,19 @@ const App = () => {
   };
 
   return (
-    <div className="flex h-screen bg-dark-900 text-slate-100 font-sans selection:bg-brand-500/30">
+    <div className="flex h-[100dvh] bg-dark-900 text-slate-100 font-sans selection:bg-brand-500/30 overflow-hidden">
       <Sidebar
         currentView={currentView}
-        onChangeView={setCurrentView}
+        onChangeView={(view) => {
+          setCurrentView(view);
+          setIsMobileMenuOpen(false);
+        }}
         tenant={tenant}
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
       />
 
-      <main className="flex-1 ml-64 relative overflow-y-auto bg-gradient-to-br from-dark-900 via-dark-900 to-dark-800">
+      <main className="flex-1 md:ml-64 ml-0 relative overflow-y-auto bg-gradient-to-br from-dark-900 via-dark-900 to-dark-800 pb-[72px] md:pb-0">
         {/* Subtle background glow effect */}
         <div
           className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none opacity-20"
@@ -82,6 +89,38 @@ const App = () => {
         lead={selectedLead}
         primaryColor={tenant.primaryColor}
       />
+
+      {/* Bottom Navigation (Mobile Only) */}
+      <nav className="md:hidden fixed bottom-0 left-0 w-full h-[72px] bg-dark-900 border-t border-gray-800/70 flex items-center justify-around px-2 z-40" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+        {[
+          { id: 'dashboard', label: 'Home', icon: LayoutDashboard },
+          { id: 'calendar', label: 'Agenda', icon: CalendarDays },
+          { id: 'clientes', label: 'Clientes', icon: Baby },
+          { id: 'chat', label: 'Chat', icon: MessageSquare },
+        ].map(item => {
+          const isActive = currentView === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => setCurrentView(item.id)}
+              className={`flex flex-col items-center justify-center w-16 h-full gap-1 ${isActive ? 'text-white' : 'text-gray-500 hover:text-gray-300'
+                }`}
+            >
+              <item.icon className="w-5 h-5" style={isActive ? { color: tenant.primaryColor } : {}} />
+              <span className="text-[10px] font-semibold font-display tracking-wide">{item.label}</span>
+            </button>
+          );
+        })}
+
+        {/* Menu Button */}
+        <button
+          onClick={() => setIsMobileMenuOpen(true)}
+          className="flex flex-col items-center justify-center w-16 h-full gap-1 text-gray-500 hover:text-gray-300"
+        >
+          <Menu className="w-5 h-5" />
+          <span className="text-[10px] font-semibold font-display tracking-wide">Menu</span>
+        </button>
+      </nav>
     </div>
   );
 };

@@ -13,6 +13,7 @@ import {
   Smartphone,
   CalendarDays,
   Baby,
+  X,
 } from 'lucide-react';
 import { Tenant } from '../types';
 
@@ -20,9 +21,11 @@ interface SidebarProps {
   currentView: string;
   onChangeView: (view: string) => void;
   tenant: Tenant;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, tenant }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, tenant, isOpen, onClose }) => {
 
   const operacionalItems = [
     { id: 'dashboard', label: 'Home', icon: LayoutDashboard },
@@ -70,76 +73,94 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, ten
   };
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-64 bg-dark-900 border-r border-gray-800/70 flex flex-col z-50">
-
-      {/* ── Branding com Logo ──────────────────────────── */}
-      <div className="h-[72px] flex items-center px-5 border-b border-gray-800/70 gap-3 flex-shrink-0">
-        {/* Logo Grupo Curumim */}
-        <img
-          src={logoImg}
-          alt="Grupo Curumim"
-          className="h-9 w-auto object-contain"
-          style={{ filter: 'brightness(1.05) drop-shadow(0 2px 6px rgba(253,184,19,0.3))' }}
-          onError={e => {
-            // Fallback: mostra ícone se logo não carregar
-            (e.target as HTMLImageElement).style.display = 'none';
-          }}
+    <>
+      {/* Backdrop Mobile */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden transition-opacity"
+          onClick={onClose}
         />
-        {/* Fallback visível apenas se logo falhar */}
-        <div className="flex flex-col">
-          <span
-            className="text-[10px] font-black uppercase tracking-widest font-display"
-            style={{ color: tenant.primaryColor }}
-          >
-            Copiloto IA
-          </span>
-          <span className="text-[9px] text-gray-600 font-mono uppercase tracking-wider">v2.0</span>
-        </div>
-      </div>
+      )}
+      <aside
+        className={`fixed left-0 top-0 h-full w-64 bg-dark-900 border-r border-gray-800/70 flex flex-col z-50 transform transition-transform duration-300 ease-in-out md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+      >
 
-      {/* ── Navegação ──────────────────────────────────── */}
-      <nav className="flex-1 py-5 px-3 space-y-5 overflow-y-auto">
+        {/* ── Branding com Logo ──────────────────────────── */}
+        <div className="h-[72px] flex items-center justify-between px-5 border-b border-gray-800/70 flex-shrink-0">
+          <div className="flex items-center gap-3">
+            {/* Logo Grupo Curumim */}
+            <img
+              src={logoImg}
+              alt="Grupo Curumim"
+              className="h-9 w-auto object-contain"
+              style={{ filter: 'brightness(1.05) drop-shadow(0 2px 6px rgba(253,184,19,0.3))' }}
+              onError={e => {
+                // Fallback: mostra ícone se logo não carregar
+                (e.target as HTMLImageElement).style.display = 'none';
+              }}
+            />
+            {/* Fallback visível apenas se logo falhar */}
+            <div className="flex flex-col">
+              <span
+                className="text-[10px] font-black uppercase tracking-widest font-display"
+                style={{ color: tenant.primaryColor }}
+              >
+                Copiloto IA
+              </span>
+              <span className="text-[9px] text-gray-600 font-mono uppercase tracking-wider">v2.0</span>
+            </div>
+          </div>
 
-        {/* Operacional */}
-        <div className="space-y-0.5">
-          <div className="px-3 mb-2 h7 text-gray-600" style={{ fontFamily: 'Nunito, sans-serif', fontSize: '0.68rem', fontWeight: 900, letterSpacing: '1px', textTransform: 'uppercase' }}>
-            Operacional
-          </div>
-          {operacionalItems.map(renderItem)}
-        </div>
-
-        {/* Inteligência */}
-        <div className="space-y-0.5">
-          <div className="px-3 mb-2" style={{ fontFamily: 'Nunito, sans-serif', fontSize: '0.68rem', fontWeight: 900, letterSpacing: '1px', textTransform: 'uppercase', color: '#4b5563' }}>
-            Inteligência &amp; Sistema
-          </div>
-          {sistemaItems.map(renderItem)}
-        </div>
-      </nav>
-
-      {/* ── Rodapé — Perfil ────────────────────────────── */}
-      <div className="p-4 border-t border-gray-800/70 bg-black/20 flex-shrink-0">
-        <div className="flex items-center gap-3">
-          {/* Avatar com cor do tenant */}
-          <div
-            className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-black font-display shadow-inner flex-shrink-0"
-            style={{
-              background: `linear-gradient(135deg, ${tenant.primaryColor}40, ${tenant.primaryColor}70)`,
-              border: `1.5px solid ${tenant.primaryColor}50`,
-              color: tenant.primaryColor,
-            }}
-          >
-            A
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-bold text-white truncate font-display leading-tight">Admin</p>
-            <p className="text-[11px] text-gray-600 truncate leading-tight">admin@grupocurumim.com.br</p>
-          </div>
-          <button className="text-gray-600 hover:text-white transition-colors p-1" title="Sair">
-            <LogOut className="w-4 h-4" />
+          <button onClick={onClose} className="md:hidden text-gray-400 hover:text-white p-1 rounded-md hover:bg-gray-800">
+            <X className="w-5 h-5" />
           </button>
         </div>
-      </div>
-    </aside>
+
+        {/* ── Navegação ──────────────────────────────────── */}
+        <nav className="flex-1 py-5 px-3 space-y-5 overflow-y-auto">
+
+          {/* Operacional */}
+          <div className="space-y-0.5">
+            <div className="px-3 mb-2 h7 text-gray-600" style={{ fontFamily: 'Nunito, sans-serif', fontSize: '0.68rem', fontWeight: 900, letterSpacing: '1px', textTransform: 'uppercase' }}>
+              Operacional
+            </div>
+            {operacionalItems.map(renderItem)}
+          </div>
+
+          {/* Inteligência */}
+          <div className="space-y-0.5">
+            <div className="px-3 mb-2" style={{ fontFamily: 'Nunito, sans-serif', fontSize: '0.68rem', fontWeight: 900, letterSpacing: '1px', textTransform: 'uppercase', color: '#4b5563' }}>
+              Inteligência &amp; Sistema
+            </div>
+            {sistemaItems.map(renderItem)}
+          </div>
+        </nav>
+
+        {/* ── Rodapé — Perfil ────────────────────────────── */}
+        <div className="p-4 border-t border-gray-800/70 bg-black/20 flex-shrink-0">
+          <div className="flex items-center gap-3">
+            {/* Avatar com cor do tenant */}
+            <div
+              className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-black font-display shadow-inner flex-shrink-0"
+              style={{
+                background: `linear-gradient(135deg, ${tenant.primaryColor}40, ${tenant.primaryColor}70)`,
+                border: `1.5px solid ${tenant.primaryColor}50`,
+                color: tenant.primaryColor,
+              }}
+            >
+              A
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-bold text-white truncate font-display leading-tight">Admin</p>
+              <p className="text-[11px] text-gray-600 truncate leading-tight">admin@grupocurumim.com.br</p>
+            </div>
+            <button className="text-gray-600 hover:text-white transition-colors p-1" title="Sair">
+              <LogOut className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </aside>
+    </>
   );
 };

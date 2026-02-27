@@ -360,7 +360,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({ leads: initialLeads, o
   ];
 
   return (
-    <div className="h-full flex flex-col overflow-hidden">
+    <div className="h-full flex flex-col overflow-hidden pb-20 md:pb-0">
 
       {/* ── Barra de Filtros ─────────────────────────────── */}
       <div className="flex-shrink-0 px-6 pt-6 pb-4 flex flex-wrap items-center gap-3 border-b border-gray-800/60">
@@ -427,8 +427,8 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({ leads: initialLeads, o
               key={v.id}
               onClick={() => setFilterVendedor(filterVendedor === v.id ? '' : v.id)}
               className={`flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-full border transition ${filterVendedor === v.id
-                  ? 'bg-white/10 border-white/20 text-white'
-                  : 'border-gray-700 text-gray-400 hover:text-white hover:border-gray-500'
+                ? 'bg-white/10 border-white/20 text-white'
+                : 'border-gray-700 text-gray-400 hover:text-white hover:border-gray-500'
                 }`}
             >
               <span className={`w-2.5 h-2.5 rounded-full ${v.cor_avatar}`} />

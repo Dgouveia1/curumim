@@ -213,8 +213,8 @@ export const HomeView: React.FC<HomeViewProps> = ({ primaryColor, onNavigate }) 
         .slice(0, 5);
 
     return (
-        <div className="h-full overflow-y-auto">
-            <div className="max-w-5xl mx-auto px-6 py-8 space-y-8">
+        <div className="h-full overflow-y-auto pb-20 md:pb-0">
+            <div className="max-w-5xl mx-auto px-4 md:px-6 py-6 md:py-8 space-y-8">
 
                 {/* ── HERO: Boas-vindas ──────────────────────────────────── */}
                 <div className="relative rounded-3xl overflow-hidden p-8"

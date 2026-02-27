@@ -6,6 +6,7 @@ import {
     Paperclip,
     MoreVertical,
     ChevronDown,
+    ChevronLeft,
     Bot,
     User,
     Headphones,
@@ -334,6 +335,7 @@ export const ChatView: React.FC<ChatViewProps> = ({ primaryColor }) => {
     const [activeTagFilter, setActiveTagFilter] = useState<ConversationTag | null>(null);
     const [newMessage, setNewMessage] = useState('');
     const [senderMode, setSenderMode] = useState<MessageSender>('vendedor');
+    const [mobileView, setMobileView] = useState<'list' | 'chat'>('list');
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const activeConv = conversations.find(c => c.id === activeConvId) ?? conversations[0];
@@ -380,12 +382,12 @@ export const ChatView: React.FC<ChatViewProps> = ({ primaryColor }) => {
     const vendedor = getVendedor(activeConv.lead.vendedor_id);
 
     return (
-        <div className="flex h-screen pt-0 overflow-hidden bg-dark-900">
+        <div className="flex h-screen pt-0 overflow-hidden bg-dark-900 pb-20 md:pb-0">
 
             {/* ══════════════════════════════════════════
           PAINEL ESQUERDO — Lista de Conversas
       ══════════════════════════════════════════ */}
-            <div className="w-[340px] flex-shrink-0 flex flex-col border-r border-gray-800 bg-gray-900/40">
+            <div className={`w-full md:w-[340px] flex-shrink-0 flex flex-col border-r border-gray-800 bg-gray-900/40 ${mobileView === 'chat' ? 'hidden md:flex' : 'flex'}`}>
 
                 {/* Cabeçalho esquerdo */}
                 <div className="px-4 pt-6 pb-3 border-b border-gray-800">
@@ -455,6 +457,7 @@ export const ChatView: React.FC<ChatViewProps> = ({ primaryColor }) => {
                                 isActive={conv.id === activeConvId}
                                 onClick={() => {
                                     setActiveConvId(conv.id);
+                                    setMobileView('chat');
                                     // Zerar não lidas ao abrir
                                     setConversations(prev =>
                                         prev.map(c => c.id === conv.id ? { ...c, nao_lidas: 0 } : c)
@@ -469,10 +472,13 @@ export const ChatView: React.FC<ChatViewProps> = ({ primaryColor }) => {
             {/* ══════════════════════════════════════════
           PAINEL DIREITO — Histórico de Mensagens
       ══════════════════════════════════════════ */}
-            <div className="flex-1 flex flex-col min-w-0">
+            <div className={`flex-1 flex flex-col min-w-0 ${mobileView === 'list' ? 'hidden md:flex' : 'flex'}`}>
 
                 {/* Header da Conversa Ativa */}
-                <div className="h-[72px] flex items-center px-6 gap-4 border-b border-gray-800 bg-gray-900/30 flex-shrink-0">
+                <div className="h-[72px] flex items-center px-4 md:px-6 gap-3 md:gap-4 border-b border-gray-800 bg-gray-900/30 flex-shrink-0">
+                    <button onClick={() => setMobileView('list')} className="md:hidden p-1.5 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition shrink-0">
+                        <ChevronLeft className="w-5 h-5" />
+                    </button>
                     <LeadAvatar lead={activeConv.lead} size="md" />
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">

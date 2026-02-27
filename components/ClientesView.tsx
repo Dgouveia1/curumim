@@ -783,7 +783,7 @@ export const ClientesView: React.FC<ClientesViewProps> = ({ primaryColor }) => {
     };
 
     return (
-        <div className="h-full flex flex-col overflow-hidden">
+        <div className="h-full flex flex-col overflow-hidden pb-20 md:pb-0">
 
             {/* ── Header ────────────────────────────────────── */}
             <div className="flex-shrink-0 px-6 py-5 border-b border-gray-800/60">
